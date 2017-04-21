@@ -190,10 +190,10 @@ If the data dictionary is stored in redis, where "flag" is the gorm model field,
 }
 ```
 There are two ways to generate api, one from the command line generation, one from the file batch generation:
-##1.command line
-![Alt text](./11111111.png)
+## 1.command line
+![Alt text](./cmd.png)
 
-##2.file
+## 2.file
 replace -form with -forms = file name, you can also enter "apigen" generated directly, the other command parameters from "app.conf" load
 
 
