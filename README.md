@@ -210,20 +210,20 @@ import (
 )
 
 type TblinformationReworkapply struct {
-	BenefitEstimate         string     `gorm:"column:BenefitEstimate" json:"BenefitEstimate"`                     // 效益评估
-	BillNo20                string     `gorm:"column:BillNo20" json:"BillNo20"`                                   // 程序增修单编号
-	EnterTime               *time.Time `gorm:"column:Enter_Time" json:"Enter_Time"`                               // 申请日期
-	EnterUser               string     `gorm:"column:Enter_User" json:"Enter_User"`                               // 申请人
-	FineshTime              *time.Time `gorm:"column:FineshTime" json:"FineshTime"`                               // 预计完成时间
-	ID                      int        `gorm:"column:ID;primary_key" json:"ID"`                                   // 序号
-	ItemMoney               float64    `gorm:"column:ItemMoney" json:"ItemMoney"`                                 // 项目金额
-	MaintenanceCause        string     `gorm:"column:maintenance_cause" json:"maintenance_cause"`                 // 维护原因或现象描述
-	Outcome                 string     `gorm:"column:outcome" json:"outcome"`                                     // 需要达到结果描述
-	PayCost                 float64    `gorm:"column:PayCost" json:"PayCost"`                                     // 花费成本
-	PhoneNO                 string     `gorm:"column:PhoneNO" json:"PhoneNO"`                                     // 联系电话
-	SHStatus                int        `gorm:"column:SH_Status" json:"SH_Status"`                                 // 审核状态
-	Sjwcrw                  *time.Time `gorm:"column:sjwcrw" json:"sjwcrw"`                                       // 实际完成日期
-	Systemname              string     `gorm:"column:systemname" json:"systemname"`                               // 程序增修系统名称
+	BenefitEstimate         string     `gorm:"column:BenefitEstimate" json:"BenefitEstimate"`     // 效益评估
+	BillNo20                string     `gorm:"column:BillNo20" json:"BillNo20"`                   // 程序增修单编号
+	EnterTime               *time.Time `gorm:"column:Enter_Time" json:"Enter_Time"`               // 申请日期
+	EnterUser               string     `gorm:"column:Enter_User" json:"Enter_User"`               // 申请人
+	FineshTime              *time.Time `gorm:"column:FineshTime" json:"FineshTime"`               // 预计完成时间
+	ID                      int        `gorm:"column:ID;primary_key" json:"ID"`                   // 序号
+	ItemMoney               float64    `gorm:"column:ItemMoney" json:"ItemMoney"`                 // 项目金额
+	MaintenanceCause        string     `gorm:"column:maintenance_cause" json:"maintenance_cause"` // 维护原因或现象描述
+	Outcome                 string     `gorm:"column:outcome" json:"outcome"`                     // 需要达到结果描述
+	PayCost                 float64    `gorm:"column:PayCost" json:"PayCost"`                     // 花费成本
+	PhoneNO                 string     `gorm:"column:PhoneNO" json:"PhoneNO"`                     // 联系电话
+	SHStatus                int        `gorm:"column:SH_Status" json:"SH_Status"`                 // 审核状态
+	Sjwcrw                  *time.Time `gorm:"column:sjwcrw" json:"sjwcrw"`                       // 实际完成日期
+	Systemname              string     `gorm:"column:systemname" json:"systemname"`               // 程序增修系统名称
 
 	TblinformationReworkapplySub2ID           []TblinformationReworkapplySub2           `gorm:"ForeignKey:ParentID;AssociationForeignKey:ID" json:"tblinformation_reworkapply_Sub2_ID"`
 	TblinformationReworkapplySub3ID           []TblinformationReworkapplySub3           `gorm:"ForeignKey:ParentID;AssociationForeignKey:ID" json:"tblinformation_reworkapply_Sub3_ID"`
