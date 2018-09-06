@@ -1,13 +1,12 @@
 package main
 
 import (
-	"apigen/models"
+	"cy/CloudERP/apiGen/models"
+
 	"flag"
-	"html/template"
-	"io/ioutil"
+	"log"
 
 	"github.com/astaxie/beego"
-	"github.com/hwfy/file"
 )
 
 var (
@@ -28,19 +27,6 @@ var (
 )
 
 func init() {
-	logDir := "../logs/apiGen/"
-
-	file.MkDir(logDir)
-
-	beego.SetLogger("file", `{
-		"filename":"`+logDir+`app.log",
-		"level":7,
-		"maxlines":0,
-		"maxsize":0,
-		"daily":true,
-		"maxdays":10 
-	}`)
-
 	switch "" {
 	case *db:
 		*db = beego.AppConfig.String("db")
@@ -68,10 +54,11 @@ func init() {
 	}
 }
 
-func main() {
-	flag.Parse()
-
-	dbInfo := models.DBInfo{
+func newDatasource() models.DataSource {
+	if *db == "" {
+		log.Fatalf("数据库名称为空!")
+	}
+	return models.DataSource{
 		Name:   *db,
 		Host:   *host,
 		Port:   *port,
@@ -79,49 +66,26 @@ func main() {
 		Pwd:    *pwd,
 		Driver: *driver,
 	}
+}
 
-	mdata, err := ioutil.ReadFile("./views/orm.tpl")
-	if err != nil {
-		beego.Error(err)
-		return
-	}
-	cdata, err := ioutil.ReadFile("./views/ctrl.tpl")
-	if err != nil {
-		beego.Error(err)
-		return
-	}
+func main() {
+	flag.Parse()
 
-	mTpl := template.Must(
-		template.New("models").
-			Funcs(template.FuncMap{
-				"Tags":              models.Tags,
-				"AssoTags":          models.AssoTags,
-				"TypeConvert":       models.TypeConvert,
-				"ExportColumn":      models.ExportColumn,
-				"ColumnAndType":     models.ColumnAndType,
-				"ColumnWithPostfix": models.ColumnWithPostfix,
-			}).Parse(string(mdata)))
+	datasource := newDatasource()
 
-	cTpl := template.Must(
-		template.New("ctrls").
-			Parse(string(cdata)))
-
-	if *del != "" {
-		err = models.DelApiFile(*path, *del)
-		if err != nil {
-			beego.Error(err)
-		}
-	} else {
+	if *del == "" {
 		if *form != "" {
-			err = models.GenApiFile(dbInfo, mTpl, cTpl, *path, *form)
-			if err != nil {
-				beego.Error(err)
+			if err := datasource.GenApiFile(*path, *form); err != nil {
+				log.Fatalln(err)
 			}
 		} else {
-			err = models.GenApiFiles(dbInfo, mTpl, cTpl, *path, *forms)
-			if err != nil {
-				beego.Error(err)
+			if err := datasource.GenApiFiles(*path, *forms); err != nil {
+				log.Fatalln(err)
 			}
+		}
+	} else {
+		if err := models.DelApiFile(*path, *del); err != nil {
+			log.Fatalln(err)
 		}
 	}
 }
