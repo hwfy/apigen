@@ -163,7 +163,7 @@ func (ds DataSource) genChildFiles(dir, name string, tpl *template.Template) err
 }
 
 func (form Form) genDataSource(dir string) error {
-	name := dir + form.Base + ".go"
+	name := dir + strings.ToLower(form.Base) + ".go"
 	//如果数据源文件存在则不生成
 	_, err := os.Stat(name)
 	if err == nil {
